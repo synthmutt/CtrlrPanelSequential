@@ -5,6 +5,7 @@
 ### Panels now available - program editor / librarian:
 
 * OB-6
+* Prophet-6
 * Take 5
 * Toraiz AS-1
 
