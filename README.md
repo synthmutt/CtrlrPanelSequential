@@ -2,11 +2,10 @@
 
 [Ctrlr](https://github.com/RomanKubiak/ctrlr) panels for use with Sequential / Dave Smith Instruments synthesizers
 
-Panels now available:
+### Panels now available - program editor / librarian:
 
-OB-6 - program editor / librarian
-
-Take 5 - program editor / librarian
-
+* OB-6
+* Take 5
+* Toraiz AS-1
 
 Developed using Ctrlr Mac version 5.3.198
