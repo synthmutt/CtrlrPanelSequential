@@ -7,6 +7,7 @@
 * OB-6
 * Prophet-6
 * Take 5
+* TEO-5 - pre-release version
 * Toraiz AS-1
 
 Developed using Ctrlr Mac version 5.3.198
