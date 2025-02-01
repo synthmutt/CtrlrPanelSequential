@@ -5,6 +5,7 @@
 ### Panels now available - program editor / librarian:
 
 * OB-6
+* Pro 3
 * Prophet-6
 * Take 5
 * TEO-5 - pre-release version
