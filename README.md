@@ -11,4 +11,6 @@
 * TEO-5 - pre-release version
 * Toraiz AS-1
 
-Developed using Ctrlr Mac version 5.3.198
+Developed using Ctrlr Mac version 5.3.198, tested with Windows version 5.3.201
+
+More info in this project's [Wiki](https://github.com/synthmutt/CtrlrPanelSequential/wiki)
