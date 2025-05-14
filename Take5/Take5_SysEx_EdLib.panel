@@ -1,12 +1,12 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
 <panel name="Take5" panelShowDialogs="1" panelMessageTime="10000" panelAuthorName="synthmutt"
-       panelAuthorEmail="" panelAuthorUrl="" panelAuthorDesc="SysEx EdLib&#10;version 1.3.1"
+       panelAuthorEmail="" panelAuthorUrl="" panelAuthorDesc="SysEx EdLib&#10;version 1.3.2"
        panelVersionMajor="1" panelVersionMinor="3" panelVersionName=""
        panelVendor="Sequential" panelDevice="Take 5" panelMidiSnapshotAfterLoad="0"
        panelMidiSnapshotAfterProgramChange="0" panelMidiSnapshotDelay="10"
        panelMidiSnapshotShowProgress="0" panelMidiInputChannelDevice="1"
-       panelMidiInputDevice="-- None" panelMidiControllerChannelDevice="15"
+       panelMidiInputDevice="-- None" panelMidiControllerChannelDevice="1"
        panelMidiControllerDevice="-- None" panelMidiOutputChannelDevice="1"
        panelMidiOutputDevice="-- None" panelMidiInputFromHost="0" panelMidiInputChannelHost="1"
        panelMidiOutputToHost="0" panelMidiOutputChannelHost="1" panelMidiThruH2H="0"
@@ -51,7 +51,7 @@
        ZZCustomBank6Path="">
   <uiWindowManager>
     <uiChildWindow uiChildWindowName="LuaMethodEditor" uiChildWindowState="1491 54 1234 772">
-      <uiChildWindowContentState luaMethodEditor="&lt;?xml version=&quot;1.0&quot; encoding=&quot;UTF-8&quot;?&gt;&#13;&#10;&#13;&#10;&lt;OPEN id=&quot;LUA&quot; scrollPos=&quot;20&quot;&gt;&#13;&#10;  &lt;OPEN id=&quot;UserInterface&quot;/&gt;&#13;&#10;  &lt;OPEN id=&quot;PresetData&quot;/&gt;&#13;&#10;  &lt;SELECTED id=&quot;/LUA/PresetData/sendProgToSynth&quot;/&gt;&#13;&#10;&lt;/OPEN&gt;&#13;&#10;;e451b29a85274d41b87854b38f234aac:c8829ef46a0145008754e64183d4c1ad:c231cfa331c843c18d540fb702b73be7:874ef6092eb74a7a8918a096af543f60:06abeac8e5a14236b22c660730a21bfe:7f1a9aa4a63f456a88765a0bfc2f8e84:42882390b02e47a5a52df8568d28c1cc"/>
+      <uiChildWindowContentState luaMethodEditor="&lt;?xml version=&quot;1.0&quot; encoding=&quot;UTF-8&quot;?&gt;&#13;&#10;&#13;&#10;&lt;OPEN id=&quot;LUA&quot; scrollPos=&quot;0&quot;&gt;&#13;&#10;  &lt;OPEN id=&quot;UserInterface&quot;/&gt;&#13;&#10;  &lt;OPEN id=&quot;PresetData&quot;/&gt;&#13;&#10;  &lt;SELECTED id=&quot;/LUA/UserInterface/setupPanelComponents&quot;/&gt;&#13;&#10;&lt;/OPEN&gt;&#13;&#10;;e451b29a85274d41b87854b38f234aac:c8829ef46a0145008754e64183d4c1ad:c231cfa331c843c18d540fb702b73be7"/>
     </uiChildWindow>
     <uiChildWindow uiChildWindowName="LayerEditor" uiChildWindowState="1562 877 800 500">
       <uiChildWindowContentState/>
@@ -123,7 +123,7 @@
           <luaMethod luaMethodName="firstVSTindexChanged" luaMethodCode="--&#10;-- Called when a modulator value changes&#10;-- @mod   http://ctrlr.org/api/class_ctrlr_modulator.html&#10;-- @value    new numeric value of the modulator&#10;--&#10;firstVSTindexChanged = function(--[[ CtrlrModulator --]] mod, --[[ number --]] value, --[[ number --]] source)&#10;&#9;if pg_prePanelSts ~= &quot;PanelLoaded&quot; then&#13;&#10;&#9;&#9;addToLog(&quot;firstVSTindexChanged begin BeforeAnyModulators bootstrapState=&quot;..tostring(panel:getBootstrapState()) )&#13;&#10;        return&#13;&#10;&#9;end&#13;&#10;&#9;addToLog(&quot;firstVSTindexChanged value=&quot;..tostring(value))&#13;&#10;&#13;&#10;&#9;-- Create table of modulators by VST Index, plus array of old VST Index values&#10;&#9;local numMods, mod, VSTindex, newVSTindex&#10;&#9;numMods = panel:getNumModulators()&#10;&#9;local modsByOldVSTindex = {}&#10;&#9;local oldVSTindexArray = {}&#10;&#9;for i=0, numMods - 1, 1 do&#10;&#9;&#9;mod = panel:getModulatorByIndex(i)&#10;&#9;&#9;if mod:getPropertyInt(&quot;modulatorVstExported&quot;) == 1 then&#10;&#9;&#9;&#9;VSTindex = tonumber(mod:getVstIndex())&#13;&#10;&#9;&#9;&#9;if modsByOldVSTindex[VSTindex] == nil then&#10;&#9;&#9;&#9;&#9;modsByOldVSTindex[VSTindex] = {}&#10;&#9;&#9;&#9;&#9;table.insert(oldVSTindexArray, VSTindex)&#13;&#10;&#9;&#9;&#9;end&#13;&#10;&#9;&#9;&#9;table.insert(modsByOldVSTindex[VSTindex], mod)&#10;&#9;&#9;end&#10;&#9;end&#10;&#9;&#13;&#10;&#9;-- Sort array by old VST Index, then renumber VST Index in modulators while preserving their order&#10;&#9;table.sort(oldVSTindexArray)&#13;&#10;&#9;newVSTindex = value&#10;&#9;for k, v in ipairs(oldVSTindexArray) do&#10;--&#9;&#9;console(&quot;k=&quot;..tostring(k)..&quot; v=&quot;..tostring(v)..&quot; mod=&quot;..L(modsByOldVSTindex[v]:getName()))&#13;&#10;&#9;&#9;for k2, v2 in ipairs(modsByOldVSTindex[v]) do&#10;&#9;&#9;&#9;modsByOldVSTindex[v][k2]:setPropertyInt(&quot;vstIndex&quot;, newVSTindex)&#13;&#10;&#9;&#9;&#9;newVSTindex = newVSTindex + 1&#10;&#9;&#9;end&#10;&#9;end&#10;end"
                      luaMethodLinkedProperty="" luaMethodSource="0" uuid="f3c6a77fd62648af9f6493ee72815be6"
                      luaMethodValid="1"/>
-          <luaMethod luaMethodName="colorValueChanged" luaMethodCode="--&#10;-- Called when the contents of a Label are changed&#10;-- @label&#10;-- @newContent    a string that the label now contains&#10;--&#10;&#10;colorValueChanged = function(--[[ CtrlrLabel --]] label, --[[ String --]] newContent)&#10;&#9;local lblName = L(label:getOwner():getName())&#10;&#9;if ignoreModulatorUpdateEvent(&quot;colorValueChanged &quot;..lblName, source) then&#10;        return&#10;&#9;end&#10;&#9;addToLog(&quot;colorValueChanged &quot;..lblName..&quot; newContent=&quot;..newContent..&quot; type=&quot;..type(newContent))&#10;&#10;&#9;local newColor = string.upper(newContent)&#10;&#9;if #newContent &lt; 8 then&#10;&#9;&#9;addToLog(&quot;colorValueChanged Length of color value must be eight - invalid input ignored&quot;)&#10;&#9;&#9;displayMessage(&quot;Length of color value must be eight - invalid input ignored&quot;)&#10;&#9;&#9;newColor = _G[&quot;pg_c&quot;..lblName:sub(4 - #lblName)]&#10;&#9;&#9;customSetLabelText(label, newColor)&#10;        return&#10;&#9;end&#10;&#10;&#9;customSetLabelText(label, newColor)&#10;&#9;_G[&quot;pg_c&quot;..lblName:sub(4 - #lblName)] = newColor&#10;&#9;pg_colorLastChosen = lblName&#10;&#13;&#10;&#9;SetSliderFromColor(newColor)&#13;&#10;&#10;&#9;ChangeRequestedColor(lblName)&#10;end&#10;&#13;&#10;SetSliderFromColor = function(--[[ string --]] newColor)&#13;&#10;&#9;if newColor == nil then&#13;&#10;&#9;&#9;addToLog(&quot;SetSliderFromColor newColor=nil&quot;)&#13;&#10;&#9;end&#13;&#10;&#9;local mod, mb, value&#13;&#10;&#9;mod = panel:getModulatorByName(&quot;sldColorChooseRed&quot;)&#13;&#10;&#9;mb = MemoryBlock()&#13;&#10;&#9;mb:loadFromHexString(string.sub(newColor, 3, 4))&#13;&#10;&#9;value = mb:getByte(0)&#13;&#10;&#9;mod:setModulatorValue(value, false, false, false)&#13;&#10;&#13;&#10;&#9;mod = panel:getModulatorByName(&quot;sldColorChooseGreen&quot;)&#13;&#10;&#9;mb = MemoryBlock()&#13;&#10;&#9;mb:loadFromHexString(string.sub(newColor, 5, 6))&#13;&#10;&#9;value = mb:getByte(0)&#13;&#10;&#9;mod:setModulatorValue(value, false, false, false)&#13;&#10;&#13;&#10;&#9;mod = panel:getModulatorByName(&quot;sldColorChooseBlue&quot;)&#13;&#10;&#9;mb = MemoryBlock()&#13;&#10;&#9;mb:loadFromHexString(string.sub(newColor, 7, 8))&#13;&#10;&#9;value = mb:getByte(0)&#13;&#10;&#9;mod:setModulatorValue(value, false, false, false)&#13;&#10;end&#13;&#10;&#10;ChangeRequestedColor = function(--[[ string --]] lblName)&#10;&#9;addToLog(&quot;ChangeRequestedColor lblName=&quot;..tostring(lblName))&#10;&#10;&#9;local compType&#10;&#9;for k,comp in ipairs(pg_compAllowColorChange) do&#10;&#9;&#9;compType = pg_compAllowColorChangeType[k]&#10;&#9;&#9;if lblName == nil or lblName == &quot;lblColorValueFG&quot; then&#10;&#9;&#9;&#9;if compType == &quot;uiSlider&quot; then&#10;&#9;&#9;&#9;&#9;comp:setPropertyString(&quot;uiSliderRotaryFillColour&quot;, pg_colorValueFG)&#10;&#9;&#9;&#9;&#9;comp:setPropertyString(&quot;uiSliderRotaryOutlineColour&quot;, pg_colorValueFG)&#10;&#9;&#9;&#9;&#9;comp:setPropertyString(&quot;uiSliderValueHighlightColour&quot;, pg_colorValueFG)&#10;&#9;&#9;&#9;&#9;comp:setPropertyString(&quot;uiSliderIncDecButtonColour&quot;, pg_colorValueFG)&#10;&#9;&#9;&#9;elseif compType == &quot;uiCombo&quot; then&#10;&#9;&#9;&#9;&#9;comp:setPropertyString(&quot;uiComboButtonColour&quot;, pg_colorValueFG)&#10;&#9;&#9;&#9;&#9;comp:setPropertyString(&quot;uiComboMenuBackgroundColour&quot;, pg_colorValueFG)&#10;&#9;&#9;&#9;&#9;comp:setPropertyString(&quot;uiComboOutlineColour&quot;, pg_colorValueFG)&#10;&#9;&#9;&#9;elseif compType == &quot;uiLabel&quot; then&#10;&#9;&#9;&#9;&#9;comp:setPropertyString(&quot;uiLabelTextColour&quot;, pg_colorValueFG)&#10;&#9;&#9;&#9;elseif compType == &quot;uiListBox&quot; then&#10;&#9;&#9;&#9;&#9;comp:setPropertyString(&quot;uiListBoxTextColour&quot;, pg_colorValueFG)&#10;&#9;&#9;&#9;&#9;comp:setPropertyString(&quot;uiListBoxHighlightFgColour&quot;, pg_colorValueFG)&#10;&#9;&#9;&#9;end&#10;&#9;&#9;end&#10;&#9;&#9;if lblName == nil or lblName == &quot;lblColorValueBG&quot; then&#10;&#9;&#9;&#9;if compType == &quot;uiSlider&quot; then&#10;&#9;&#9;&#9;&#9;comp:setPropertyString(&quot;uiSliderValueBgColour&quot;, pg_colorValueBG)&#10;&#9;&#9;&#9;&#9;comp:setPropertyString(&quot;uiSliderThumbColour&quot;, pg_colorValueBG)&#10;&#9;&#9;&#9;elseif compType == &quot;uiCombo&quot; then&#10;&#9;&#9;&#9;&#9;comp:setPropertyString(&quot;uiComboBgColour&quot;, pg_colorValueBG)&#10;&#9;&#9;&#9;end&#10;&#9;&#9;end&#10;&#9;&#9;if lblName == nil or lblName == &quot;lblColorButtonOn&quot; then&#10;&#9;&#9;&#9;if compType == &quot;uiButton&quot; then&#10;&#9;&#9;&#9;&#9;comp:setPropertyString(&quot;uiButtonColourOn&quot;, pg_colorButtonOn)&#10;&#9;&#9;&#9;end&#10;&#9;&#9;end&#10;&#9;&#9;if lblName == nil or lblName == &quot;lblColorButtonOff&quot; then&#10;&#9;&#9;&#9;if compType == &quot;uiButton&quot; then&#10;&#9;&#9;&#9;&#9;comp:setPropertyString(&quot;uiButtonColourOff&quot;, pg_colorButtonOff)&#10;&#9;&#9;&#9;end&#10;&#9;&#9;end&#10;&#9;&#9;if lblName == nil or lblName == &quot;lblColorBackground&quot; then&#10;&#9;&#9;&#9;if compType == &quot;uiListBox&quot; then&#10;&#9;&#9;&#9;&#9;comp:setPropertyString(&quot;uiListBoxBackgroundColour&quot;, pg_colorBackground)&#10;&#9;&#9;&#9;elseif compType == &quot;uiLabel&quot; then&#10;&#9;&#9;&#9;&#9;comp:setPropertyString(&quot;uiLabelBgColour&quot;, pg_colorBackground)&#10;&#9;&#9;&#9;elseif compType == &quot;uiTabs&quot; then&#10;&#9;&#9;&#9;&#9;for i=0, comp:getObjectTree():getNumChildren() - 1, 1 do&#10;&#9;&#9;&#9;&#9;&#9;comp:getObjectTree():getChild(i):setProperty(&quot;uiTabsTabContentBackgroundColour&quot;, pg_colorBackground, nil)&#10;&#9;&#9;&#9;&#9;end&#10;&#9;&#9;&#9;end&#10;&#9;&#9;end&#10;&#9;&#9;if lblName == nil or lblName == &quot;lblColorValueText&quot; then&#10;&#9;&#9;&#9;if compType == &quot;uiSlider&quot; then&#10;&#9;&#9;&#9;&#9;comp:setPropertyString(&quot;uiSliderValueTextColour&quot;, pg_colorValueText)&#10;&#9;&#9;&#9;elseif compType == &quot;uiCombo&quot; then&#10;&#9;&#9;&#9;&#9;comp:setPropertyString(&quot;uiComboTextColour&quot;, pg_colorValueText)&#10;&#9;&#9;&#9;&#9;comp:setPropertyString(&quot;uiComboMenuFontColour&quot;, pg_colorValueText)&#10;&#9;&#9;&#9;&#9;comp:setPropertyString(&quot;uiComboArrowColour&quot;, pg_colorValueText)&#10;&#9;&#9;&#9;end&#10;&#9;&#9;end&#10;&#9;end&#10;&#9;if lblName == nil or lblName == &quot;lblColorBackground&quot; then&#10;&#9;&#9;panel:getPanelEditor():setPropertyString(&quot;uiPanelBackgroundColour1&quot;, pg_colorBackground)&#10;&#9;end&#10;end&#10;"
+          <luaMethod luaMethodName="colorValueChanged" luaMethodCode="--&#10;-- Called when the contents of a Label are changed&#10;-- @label&#10;-- @newContent    a string that the label now contains&#10;--&#10;&#10;colorValueChanged = function(--[[ CtrlrLabel --]] label, --[[ String --]] newContent)&#10;&#9;local lblName = L(label:getOwner():getName())&#10;&#9;if ignoreModulatorUpdateEvent(&quot;colorValueChanged &quot;..lblName, source) then&#10;        return&#10;&#9;end&#10;&#9;addToLog(&quot;colorValueChanged &quot;..lblName..&quot; newContent=&quot;..newContent..&quot; type=&quot;..type(newContent))&#10;&#10;&#9;local newColor = string.upper(newContent)&#10;&#9;if #newContent &lt; 8 then&#10;&#9;&#9;addToLog(&quot;colorValueChanged Length of color value must be eight - invalid input ignored&quot;)&#10;&#9;&#9;displayMessage(&quot;Length of color value must be eight - invalid input ignored&quot;)&#10;&#9;&#9;newColor = _G[&quot;pg_c&quot;..lblName:sub(4 - #lblName)]&#10;&#9;&#9;customSetLabelText(label, newColor)&#10;        return&#10;&#9;end&#10;&#10;&#9;customSetLabelText(label, newColor)&#10;&#9;_G[&quot;pg_c&quot;..lblName:sub(4 - #lblName)] = newColor&#10;&#9;pg_colorLastChosen = lblName&#10;&#13;&#10;&#9;SetSliderFromColor(newColor)&#13;&#10;&#10;&#9;ChangeRequestedColor(lblName)&#10;end&#10;&#13;&#10;SetSliderFromColor = function(--[[ string --]] newColor)&#13;&#10;&#9;if newColor == nil then&#13;&#10;&#9;&#9;addToLog(&quot;SetSliderFromColor newColor=nil&quot;)&#13;&#10;&#9;end&#13;&#10;&#9;local mod, mb, value&#13;&#10;&#9;mod = panel:getModulatorByName(&quot;sldColorChooseRed&quot;)&#13;&#10;&#9;mb = MemoryBlock()&#13;&#10;&#9;mb:loadFromHexString(string.sub(newColor, 3, 4))&#13;&#10;&#9;value = mb:getByte(0)&#13;&#10;&#9;mod:setModulatorValue(value, false, false, false)&#13;&#10;&#13;&#10;&#9;mod = panel:getModulatorByName(&quot;sldColorChooseGreen&quot;)&#13;&#10;&#9;mb = MemoryBlock()&#13;&#10;&#9;mb:loadFromHexString(string.sub(newColor, 5, 6))&#13;&#10;&#9;value = mb:getByte(0)&#13;&#10;&#9;mod:setModulatorValue(value, false, false, false)&#13;&#10;&#13;&#10;&#9;mod = panel:getModulatorByName(&quot;sldColorChooseBlue&quot;)&#13;&#10;&#9;mb = MemoryBlock()&#13;&#10;&#9;mb:loadFromHexString(string.sub(newColor, 7, 8))&#13;&#10;&#9;value = mb:getByte(0)&#13;&#10;&#9;mod:setModulatorValue(value, false, false, false)&#13;&#10;end&#13;&#10;&#10;ChangeRequestedColor = function(--[[ string --]] lblName)&#10;&#9;addToLog(&quot;ChangeRequestedColor lblName=&quot;..tostring(lblName))&#10;&#10;&#9;local compType&#10;&#9;for k,comp in ipairs(pg_compAllowColorChange) do&#10;&#9;&#9;compType = pg_compAllowColorChangeType[k]&#10;&#9;&#9;if lblName == nil or lblName == &quot;lblColorValueFG&quot; then&#10;&#9;&#9;&#9;if compType == &quot;uiSlider&quot; then&#10;&#9;&#9;&#9;&#9;comp:setPropertyString(&quot;uiSliderRotaryFillColour&quot;, pg_colorValueFG)&#10;&#9;&#9;&#9;&#9;comp:setPropertyString(&quot;uiSliderRotaryOutlineColour&quot;, pg_colorValueFG)&#10;&#9;&#9;&#9;&#9;comp:setPropertyString(&quot;uiSliderValueHighlightColour&quot;, pg_colorValueFG)&#10;&#9;&#9;&#9;&#9;comp:setPropertyString(&quot;uiSliderIncDecButtonColour&quot;, pg_colorValueFG)&#10;&#9;&#9;&#9;elseif compType == &quot;uiCombo&quot; then&#10;&#9;&#9;&#9;&#9;comp:setPropertyString(&quot;uiComboButtonColour&quot;, pg_colorValueFG)&#10;&#9;&#9;&#9;&#9;comp:setPropertyString(&quot;uiComboMenuBackgroundColour&quot;, pg_colorValueFG)&#10;&#9;&#9;&#9;&#9;comp:setPropertyString(&quot;uiComboOutlineColour&quot;, pg_colorValueFG)&#10;&#9;&#9;&#9;elseif compType == &quot;uiLabel&quot; then&#10;&#9;&#9;&#9;&#9;comp:setPropertyString(&quot;uiLabelTextColour&quot;, pg_colorValueFG)&#10;&#9;&#9;&#9;elseif compType == &quot;uiListBox&quot; then&#10;&#9;&#9;&#9;&#9;comp:setPropertyString(&quot;uiListBoxTextColour&quot;, pg_colorValueFG)&#10;&#9;&#9;&#9;&#9;comp:setPropertyString(&quot;uiListBoxHighlightFgColour&quot;, pg_colorValueFG)&#10;&#9;&#9;&#9;end&#10;&#9;&#9;end&#10;&#9;&#9;if lblName == nil or lblName == &quot;lblColorValueBG&quot; then&#10;&#9;&#9;&#9;if compType == &quot;uiSlider&quot; then&#10;&#9;&#9;&#9;&#9;comp:setPropertyString(&quot;uiSliderValueBgColour&quot;, pg_colorValueBG)&#10;&#9;&#9;&#9;&#9;comp:setPropertyString(&quot;uiSliderThumbColour&quot;, pg_colorValueBG)&#10;&#9;&#9;&#9;elseif compType == &quot;uiCombo&quot; then&#10;&#9;&#9;&#9;&#9;comp:setPropertyString(&quot;uiComboBgColour&quot;, pg_colorValueBG)&#10;&#9;&#9;&#9;end&#10;&#9;&#9;end&#10;&#9;&#9;if lblName == nil or lblName == &quot;lblColorButtonOn&quot; then&#10;&#9;&#9;&#9;if compType == &quot;uiButton&quot; then&#10;&#9;&#9;&#9;&#9;comp:setPropertyString(&quot;uiButtonColourOn&quot;, pg_colorButtonOn)&#10;&#9;&#9;&#9;end&#10;&#9;&#9;end&#10;&#9;&#9;if lblName == nil or lblName == &quot;lblColorButtonOff&quot; then&#10;&#9;&#9;&#9;if compType == &quot;uiButton&quot; then&#10;&#9;&#9;&#9;&#9;comp:setPropertyString(&quot;uiButtonColourOff&quot;, pg_colorButtonOff)&#10;&#9;&#9;&#9;end&#10;&#9;&#9;end&#10;&#9;&#9;if lblName == nil or lblName == &quot;lblColorBackground&quot; then&#10;&#9;&#9;&#9;if compType == &quot;uiListBox&quot; then&#10;&#9;&#9;&#9;&#9;comp:setPropertyString(&quot;uiListBoxBackgroundColour&quot;, pg_colorBackground)&#10;&#9;&#9;&#9;elseif compType == &quot;uiLabel&quot; then&#10;&#9;&#9;&#9;&#9;comp:setPropertyString(&quot;uiLabelBgColour&quot;, pg_colorBackground)&#10;&#9;&#9;&#9;elseif compType == &quot;uiTabs&quot; then&#10;&#9;&#9;&#9;&#9;for i=0, comp:getObjectTree():getNumChildren() - 1, 1 do&#10;&#9;&#9;&#9;&#9;&#9;comp:getObjectTree():getChild(i):setProperty(&quot;uiTabsTabContentBackgroundColour&quot;, pg_colorBackground, nil)&#10;&#9;&#9;&#9;&#9;end&#10;&#9;&#9;&#9;end&#10;&#9;&#9;end&#10;&#9;&#9;if lblName == nil or lblName == &quot;lblColorValueText&quot; then&#10;&#9;&#9;&#9;if compType == &quot;uiSlider&quot; then&#10;&#9;&#9;&#9;&#9;comp:setPropertyString(&quot;uiSliderValueTextColour&quot;, pg_colorValueText)&#10;&#9;&#9;&#9;elseif compType == &quot;uiCombo&quot; then&#10;&#9;&#9;&#9;&#9;comp:setPropertyString(&quot;uiComboTextColour&quot;, pg_colorValueText)&#10;&#9;&#9;&#9;&#9;comp:setPropertyString(&quot;uiComboMenuFontColour&quot;, pg_colorValueText)&#10;&#9;&#9;&#9;&#9;comp:setPropertyString(&quot;uiComboArrowColour&quot;, pg_colorValueText)&#10;&#9;&#9;&#9;end&#10;&#9;&#9;end&#10;&#9;end&#10;&#9;if lblName == nil or lblName == &quot;lblColorBackground&quot; then&#10;&#9;&#9;panel:getPanelEditor():setPropertyString(&quot;uiPanelBackgroundColour&quot;, pg_colorBackground)&#10;&#9;&#9;panel:getPanelEditor():setPropertyString(&quot;uiPanelBackgroundColour1&quot;, pg_colorBackground)&#10;&#9;end&#10;end&#10;"
                      luaMethodLinkedProperty="" luaMethodSource="0" uuid="1f5fca10c4014a73a3227f5093b0f700"
                      luaMethodValid="1"/>
           <luaMethod luaMethodName="colorsChanged" luaMethodCode="--&#10;-- Called when a modulator value changes&#10;-- @mod   http://ctrlr.org/api/class_ctrlr_modulator.html&#10;-- @value    new numeric value of the modulator&#10;--&#10;colorsChanged = function(--[[ CtrlrModulator --]] mod, --[[ number --]] value, --[[ number --]] source)&#10;&#9;if pg_prePanelSts ~= &quot;PanelLoaded&quot; then&#13;&#10;&#9;&#9;addToLog(&quot;colorsChanged begin BeforeAnyModulators bootstrapState=&quot;..tostring(panel:getBootstrapState()) )&#13;&#10;        return&#13;&#10;&#9;end&#13;&#10;&#9;if value ~= 1 then&#13;&#10;        return&#13;&#10;&#9;end&#13;&#10;&#9;addToLog(&quot;colorsChanged begin value=&quot;..tostring(value))&#13;&#10;&#9;mod:setValue(0, true, true)&#13;&#10;&#10;&#9;local colorScheme = panel:getModulatorByName(&quot;cmbColorScheme&quot;):getModulatorValue()&#13;&#10;&#9;if colorScheme == 0 then&#13;&#10;&#9;&#9;pg_colorValueFG = &quot;FFFF8060&quot;&#13;&#10;&#9;&#9;pg_colorValueBG = &quot;FF403020&quot;&#13;&#10;&#9;&#9;pg_colorButtonOn = &quot;FFFF0000&quot;&#13;&#10;&#9;&#9;pg_colorButtonOff = &quot;FF400000&quot;&#13;&#10;&#9;&#9;pg_colorBackground = &quot;FF002030&quot;&#13;&#10;&#9;&#9;pg_colorValueText = &quot;FFFFFFFF&quot;&#13;&#10;&#9;elseif colorScheme == 1 then&#13;&#10;&#9;&#9;pg_colorValueFG = pg_user1ColorValueFG&#13;&#10;&#9;&#9;pg_colorValueBG = pg_user1ColorValueBG&#13;&#10;&#9;&#9;pg_colorButtonOn = pg_user1ColorButtonOn&#13;&#10;&#9;&#9;pg_colorButtonOff = pg_user1ColorButtonOff&#13;&#10;&#9;&#9;pg_colorBackground = pg_user1ColorBackground&#13;&#10;&#9;&#9;pg_colorValueText = pg_user1ColorValueText&#13;&#10;&#9;elseif colorScheme == 2 then&#13;&#10;&#9;&#9;pg_colorValueFG = pg_user2ColorValueFG&#13;&#10;&#9;&#9;pg_colorValueBG = pg_user2ColorValueBG&#13;&#10;&#9;&#9;pg_colorButtonOn = pg_user2ColorButtonOn&#13;&#10;&#9;&#9;pg_colorButtonOff = pg_user2ColorButtonOff&#13;&#10;&#9;&#9;pg_colorBackground = pg_user2ColorBackground&#13;&#10;&#9;&#9;pg_colorValueText = pg_user2ColorValueText&#13;&#10;&#9;end&#13;&#10;&#9;customSetLabelText(panel:getLabel(&quot;lblColorValueFG&quot;), pg_colorValueFG)&#13;&#10;&#9;customSetLabelText(panel:getLabel(&quot;lblColorValueBG&quot;), pg_colorValueBG)&#13;&#10;&#9;customSetLabelText(panel:getLabel(&quot;lblColorButtonOn&quot;), pg_colorButtonOn)&#13;&#10;&#9;customSetLabelText(panel:getLabel(&quot;lblColorButtonOff&quot;), pg_colorButtonOff)&#13;&#10;&#9;customSetLabelText(panel:getLabel(&quot;lblColorBackground&quot;), pg_colorBackground)&#13;&#10;&#9;customSetLabelText(panel:getLabel(&quot;lblColorValueText&quot;), pg_colorValueText)&#13;&#10;&#9;ChangeRequestedColor()&#13;&#10;end"
@@ -357,20 +357,20 @@
     </luaManagerMethods>
   </luaManager>
   <panelResources/>
-  <uiPanelEditor uiPanelCanvasRectangle="0 0 1560 750" uiPanelSnapSize="8" uiPanelBackgroundColour="ffffffff"
+  <uiPanelEditor uiPanelCanvasRectangle="0 0 1560 750" uiPanelSnapSize="8" uiPanelBackgroundColour="FF002030"
                  uiPanelBackgroundColour1="FF002030" uiPanelBackgroundColour2="ffffffff"
                  uiPanelBackgroundGradientType="0" uiPanelImageResource="-- None"
-                 uiPanelEditMode="0" uiPanelLock="0" uiPanelDisabledOnEdit="0"
-                 uiPanelMenuBarVisible="1" uiPanelMenuBarHideOnExport="0" uiPanelWidth="400"
-                 uiPanelHeight="400" name="Take5" uiPanelImageAlpha="255" uiPanelImageLayout="64"
+                 uiPanelEditMode="0" uiPanelViewPortSize="1146" uiPanelPropertiesSize="286"
+                 uiPanelLock="0" uiPanelDisabledOnEdit="0" uiPanelMenuBarVisible="1"
+                 uiPanelMenuBarHideOnExport="0" uiPanelWidth="400" uiPanelHeight="400"
+                 name="Take5" uiPanelImageAlpha="255" uiPanelImageLayout="64"
                  uiPanelSnapActive="1" uiPanelPropertiesOnRight="0" luaPanelPaintBackground="-- None"
                  luaPanelResized="-- None" luaPanelFileDragDropHandler="-- None"
                  luaPanelFileDragEnterHandler="-- None" luaPanelFileDragExitHandler="-- None"
                  uiPanelInvisibleComponentAlpha="0.5" uiPanelTooltipBackgroundColour="0xffeeeebb"
                  uiPanelTooltipOutlineColour="0xff000000" uiPanelTooltipColour="0xff000000"
                  uiPanelTooltipCornerRound="1" uiPanelTooltipPlacement="2" uiPanelTooltipFont="&lt;Sans-Serif&gt;;15;1;0;0;0;1;3"
-                 uiPanelZoom="0.80000000000000004441" uiPanelPropertiesSize="286"
-                 uiPanelViewPortSize="1146">
+                 uiPanelZoom="0.80000000000000004441">
     <uiPanelCanvasLayer uiPanelCanvasLayerName="MainLayer" uiPanelCanvasLayerUid="b3cff5473364010000d41535da7f0000"
                         uiPanelCanvasLayerColour="0x000000" uiPanelCanvasLayerVisibility="1"
                         uiPanelCanvasLayerIndex="0"/>
@@ -1183,8 +1183,8 @@
                componentLuaMouseDoubleClick="-- None" uiButtonTextColourOn="ffe0e0e0"
                uiToggleButtonFocusOutline="0x00000000" uiToggleButtonText="Request Edit Buffer"
                uiButtonTrueValue="1" uiButtonFalseValue="0" uiButtonColourOff="FFA0A0A0"
-               componentRectangle="24 60 120 26" componentLayerUid="b3cff5473364010000d41535da7f0000"
-               uiType="uiToggleButton"/>
+               componentRectangle="24 60 120 26" uiToggleButtontickColour="FF000000"
+               componentLayerUid="b3cff5473364010000d41535da7f0000" uiType="uiToggleButton"/>
   </modulator>
   <modulator modulatorVstExported="0" modulatorMax="32" vstIndex="" modulatorIsStatic="0"
              modulatorGlobalVariable="-1" modulatorMuteOnStart="1" modulatorMute="1"
@@ -1484,7 +1484,8 @@
                componentLuaMouseDoubleClick="-- None" uiButtonTextColourOn="ffa0ffff"
                uiToggleButtonFocusOutline="0x00000000" uiToggleButtonText=""
                uiButtonTrueValue="1" uiButtonFalseValue="0" uiButtonColourOff="FFA0A0A0"
-               componentRectangle="4 16 21 27" uiType="uiToggleButton" componentLayerUid="b3cff5473364010000d41535da7f0000"/>
+               componentRectangle="4 16 21 27" uiToggleButtontickColour="FF000000"
+               uiType="uiToggleButton" componentLayerUid="b3cff5473364010000d41535da7f0000"/>
   </modulator>
   <modulator modulatorVstExported="0" modulatorMax="1" vstIndex="" modulatorIsStatic="0"
              modulatorGlobalVariable="-1" modulatorMuteOnStart="1" modulatorMute="1"
@@ -1514,8 +1515,8 @@
                componentLuaMouseDoubleClick="-- None" uiButtonTextColourOn="ffa0ffff"
                uiToggleButtonFocusOutline="0x00000000" uiToggleButtonText=""
                uiButtonTrueValue="1" uiButtonFalseValue="0" uiButtonColourOff="FFA0A0A0"
-               componentRectangle="4 44 21 27" componentLayerUid="b3cff5473364010000d41535da7f0000"
-               uiType="uiToggleButton"/>
+               componentRectangle="4 44 21 27" uiToggleButtontickColour="FF000000"
+               componentLayerUid="b3cff5473364010000d41535da7f0000" uiType="uiToggleButton"/>
   </modulator>
   <modulator modulatorVstExported="0" modulatorMax="1" vstIndex="" modulatorIsStatic="0"
              modulatorGlobalVariable="-1" modulatorMuteOnStart="1" modulatorMute="1"
@@ -1545,8 +1546,8 @@
                componentLuaMouseDoubleClick="-- None" uiButtonTextColourOn="ffa0ffff"
                uiToggleButtonFocusOutline="0x00000000" uiToggleButtonText=""
                uiButtonTrueValue="1" uiButtonFalseValue="0" uiButtonColourOff="FFA0A0A0"
-               componentRectangle="4 72 21 27" componentLayerUid="b3cff5473364010000d41535da7f0000"
-               uiType="uiToggleButton"/>
+               componentRectangle="4 72 21 27" uiToggleButtontickColour="FF000000"
+               componentLayerUid="b3cff5473364010000d41535da7f0000" uiType="uiToggleButton"/>
   </modulator>
   <modulator modulatorVstExported="0" modulatorMax="1" vstIndex="" modulatorIsStatic="0"
              modulatorGlobalVariable="-1" modulatorMuteOnStart="1" modulatorMute="1"
@@ -1576,8 +1577,8 @@
                componentLuaMouseDoubleClick="-- None" uiButtonTextColourOn="ffa0ffff"
                uiToggleButtonFocusOutline="0x00000000" uiToggleButtonText=""
                uiButtonTrueValue="1" uiButtonFalseValue="0" uiButtonColourOff="FFA0A0A0"
-               componentRectangle="4 100 21 27" componentLayerUid="b3cff5473364010000d41535da7f0000"
-               uiType="uiToggleButton"/>
+               componentRectangle="4 100 21 27" uiToggleButtontickColour="FF000000"
+               componentLayerUid="b3cff5473364010000d41535da7f0000" uiType="uiToggleButton"/>
   </modulator>
   <modulator modulatorCustomIndex="0" modulatorCustomIndexGroup="0" modulatorIsStatic="1"
              name="lblMuteEditBuffer" modulatorVstExported="0" modulatorValue="0">
@@ -1831,7 +1832,7 @@
              modulatorLinkedToComponent="Modulator" modulatorBaseValue="0"
              modulatorCustomIndex="0" modulatorCustomName="" modulatorCustomIndexGroup="0"
              modulatorCustomNameGroup="" modulatorVstNameFormat="%n" luaModulatorValueChange="sendBuffer"
-             name="btnSendBuffer" modulatorMin="0" modulatorValue="1">
+             name="btnSendBuffer" modulatorMin="0" modulatorValue="0">
     <midi midiMessageType="9" midiMessageChannelOverride="0" midiMessageChannel="1"
           midiMessageCtrlrNumber="1" midiMessageCtrlrValue="0" midiMessageMultiList=""
           midiMessageSysExFormula=""/>
@@ -7233,7 +7234,8 @@
                componentLuaMouseDoubleClick="-- None" uiButtonTextColourOn="ffffffff"
                uiToggleButtonFocusOutline="0x00000000" uiToggleButtonText="Sequence only"
                uiButtonTrueValue="1" uiButtonFalseValue="0" uiButtonColourOff="FF404050"
-               componentRectangle="72 88 120 26" uiType="uiToggleButton" componentLayerUid="bd9fbc00c47200002001000000000000"/>
+               componentRectangle="72 88 120 26" uiToggleButtontickColour="FF000000"
+               uiType="uiToggleButton" componentLayerUid="bd9fbc00c47200002001000000000000"/>
   </modulator>
   <modulator modulatorVstExported="0" modulatorMax="1" vstIndex="" modulatorIsStatic="0"
              modulatorGlobalVariable="-1" modulatorMuteOnStart="0" modulatorMute="0"
@@ -7505,7 +7507,8 @@
                componentLuaMouseDoubleClick="-- None" uiButtonTextColourOn="ffffffff"
                uiToggleButtonFocusOutline="0x00000000" uiToggleButtonText="Include Unknown Parms"
                uiButtonTrueValue="1" uiButtonFalseValue="0" uiButtonColourOff="FFA0A0A0"
-               componentRectangle="40 88 176 26" uiType="uiToggleButton" componentLayerUid="3d2e2c7d5cb100002001000000000000"/>
+               componentRectangle="40 88 176 26" uiToggleButtontickColour="FF000000"
+               uiType="uiToggleButton" componentLayerUid="3d2e2c7d5cb100002001000000000000"/>
   </modulator>
   <modulator modulatorVstExported="0" modulatorMax="5" vstIndex="" modulatorIsStatic="0"
              modulatorGlobalVariable="-1" modulatorMuteOnStart="1" modulatorMute="1"
@@ -10394,7 +10397,8 @@
                componentLuaMouseDoubleClick="-- None" uiButtonTextColourOn="ffffffff"
                uiToggleButtonFocusOutline="0x00000000" uiToggleButtonText="Include Unknown Parms"
                uiButtonTrueValue="1" uiButtonFalseValue="0" uiButtonColourOff="FFA0A0A0"
-               componentRectangle="176 32 176 26" uiType="uiToggleButton" componentLayerUid="b804b5be911a03002001000000000000"/>
+               componentRectangle="176 32 176 26" uiToggleButtontickColour="FF000000"
+               uiType="uiToggleButton" componentLayerUid="b804b5be911a03002001000000000000"/>
   </modulator>
   <panelCustomData/>
 </panel>
