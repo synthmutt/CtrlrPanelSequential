@@ -4,6 +4,7 @@
 
 ### Panels now available - program editor / librarian:
 
+* Mopho Desktop / Keyboard / SE / x4
 * OB-6
 * Pro 3
 * Prophet-6
