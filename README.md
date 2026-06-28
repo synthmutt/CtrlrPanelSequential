@@ -9,7 +9,7 @@
 * Pro 3
 * Prophet-6
 * Take 5
-* TEO-5 - pre-release version
+* TEO-5
 * Toraiz AS-1
 
 Developed using Ctrlr Mac version 5.3.198, tested with Windows version 5.3.201 and CtrlrX Mac 5.6.32
